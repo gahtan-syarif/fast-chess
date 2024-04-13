@@ -3,6 +3,7 @@
 #include <matchmaking/elo/elo.hpp>
 #include <matchmaking/output/output.hpp>
 #include <util/logger/logger.hpp>
+#include <types/tournament_options.hpp>
 
 namespace fast_chess {
 
@@ -17,10 +18,17 @@ class Fastchess : public IOutput {
         std::cout << "--------------------------------------------------\n";
     };
 
+    const options::Tournament &config;
+
     void printElo(const Stats& stats, const std::string& first, const std::string& second,
                   std::size_t current_game_count) override {
-        const Elo elo(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                      stats.penta_LD, stats.penta_LL);
+        if (config.report_penta == true){
+           const Elo elo(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
+                         stats.penta_LD, stats.penta_LL);
+        }
+        else if (config.report_penta == false) {
+            const Elo elo(stats.wins, stats.losses, stats.draws)
+        }
 
         std::stringstream ss;
         ss << "Score of "   //
@@ -34,59 +42,82 @@ class Fastchess : public IOutput {
            << "L - "        //
            << stats.draws   //
            << "D ["         //
-           << Elo::getScoreRatio(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                                 stats.penta_LD, stats.penta_LL)  //
+           << Elo::getScoreRatio(stats.wins, stats.losses, stats.draws)  //
            << "] "                                                //
            << current_game_count                                  //
            << "\n";
+        if (config.report_penta == true){
+           ss << "Elo difference: "   //
+              << elo.getElo()         //
+              << ", "                 //
+              << "nElo difference: "  //
+              << elo.getnElo()        //
+              << ", "                 //
+              << "LOS: "              //
+              << Elo::getLos(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
+                             stats.penta_LD, stats.penta_LL)  //
+              << ", "                                         //
+              << "PairDrawRatio: "                            //
+              << Elo::getDrawRatio(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
+                                   stats.penta_LD, stats.penta_LL)  //
+              << "\n";
+        }
+        else if (config.report_penta == false){
+           ss << "Elo difference: "   //
+              << elo.getElo()         //
+              << ", "                 //
+              << "nElo difference: "  //
+              << elo.getnElo()        //
+              << ", "                 //
+              << "LOS: "              //
+              << Elo::getLos(stats.wins, stats.losses, stats.draws)  //
+              << ", "                                         //
+              << "PairDrawRatio: "                            //
+              << Elo::getDrawRatio(stats.wins, stats.losses, stats.draws)  //
+              << "\n";
+          }
 
-        ss << "Elo difference: "   //
-           << elo.getElo()         //
-           << ", "                 //
-           << "nElo difference: "  //
-           << elo.getnElo()        //
-           << ", "                 //
-           << "LOS: "              //
-           << Elo::getLos(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                          stats.penta_LD, stats.penta_LL)  //
-           << ", "                                         //
-           << "PairDrawRatio: "                            //
-           << Elo::getDrawRatio(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                                stats.penta_LD, stats.penta_LL)  //
-           << "\n";
-
-        std::cout << ss.str() << std::flush;
+         std::cout << ss.str() << std::flush;
     }
 
     void printSprt(const SPRT& sprt, const Stats& stats) override {
         if (sprt.isValid()) {
             std::stringstream ss;
-
-            ss << "LLR: " << std::fixed << std::setprecision(2)
-               << sprt.getLLR(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                              stats.penta_LD, stats.penta_LL)
-               << " " << sprt.getBounds() << " " << sprt.getElo() << "\n";
-            std::cout << ss.str() << std::flush;
+            if (config.report_penta == true){
+               ss << "LLR: " << std::fixed << std::setprecision(2)
+                  << sprt.getLLR(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
+                                 stats.penta_LD, stats.penta_LL)
+                  << " " << sprt.getBounds() << " " << sprt.getElo() << "\n";
+               std::cout << ss.str() << std::flush;
+            }
+            if (config.report_penta == false){
+               ss << "LLR: " << std::fixed << std::setprecision(2)
+                  << sprt.getLLR(stats.wins, stats.draws, stats.losses)
+                  << " " << sprt.getBounds() << " " << sprt.getElo() << "\n";
+               std::cout << ss.str() << std::flush;
+            }
         }
     };
 
     static void printPenta(const Stats& stats) {
-        std::stringstream ss;
+        if (config.report_penta == true){
+           std::stringstream ss;
 
-        ss << "Ptnml:   " << std::right << std::setw(7)  //
-           << "LL" << std::right << std::setw(7)         //
-           << "LD" << std::right << std::setw(7)         //
-           << "DD/WL" << std::right << std::setw(7)      //
-           << "WD" << std::right << std::setw(7)         //
-           << "WW"
-           << "\n"
-           << "Distr:   " << std::right << std::setw(7)                      //
-           << stats.penta_LL << std::right << std::setw(7)                   //
-           << stats.penta_LD << std::right << std::setw(7)                   //
-           << stats.penta_WL + stats.penta_DD << std::right << std::setw(7)  //
-           << stats.penta_WD << std::right << std::setw(7)                   //
-           << stats.penta_WW << "\n";
-        std::cout << ss.str() << std::flush;
+           ss << "Ptnml:   " << std::right << std::setw(7)  //
+              << "LL" << std::right << std::setw(7)         //
+              << "LD" << std::right << std::setw(7)         //
+              << "DD/WL" << std::right << std::setw(7)      //
+              << "WD" << std::right << std::setw(7)         //
+              << "WW"
+              << "\n"
+              << "Distr:   " << std::right << std::setw(7)                      //
+              << stats.penta_LL << std::right << std::setw(7)                   //
+              << stats.penta_LD << std::right << std::setw(7)                   //
+              << stats.penta_WL + stats.penta_DD << std::right << std::setw(7)  //
+              << stats.penta_WD << std::right << std::setw(7)                   //
+              << stats.penta_WW << "\n";
+           std::cout << ss.str() << std::flush;
+        }
     }
 
     void startGame(const pair_config& configs, std::size_t current_game_count,
