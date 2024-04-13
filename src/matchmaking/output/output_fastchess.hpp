@@ -9,6 +9,8 @@ namespace fast_chess {
 
 class Fastchess : public IOutput {
    public:
+    Fastchess(const options::Tournament& cfg) : config(cfg) {}
+
     void printInterval(const SPRT& sprt, const Stats& stats, const std::string& first,
                        const std::string& second, int current_game_count) override {
         std::cout << "--------------------------------------------------\n";
@@ -18,16 +20,16 @@ class Fastchess : public IOutput {
         std::cout << "--------------------------------------------------\n";
     };
 
-    const options::Tournament &config;
+    const options::Tournament& config;
 
     void printElo(const Stats& stats, const std::string& first, const std::string& second,
                   std::size_t current_game_count) override {
-        if (config.report_penta == true){
-           const Elo elo(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
-                         stats.penta_LD, stats.penta_LL);
-        }
-        else if (config.report_penta == false) {
-            const Elo elo(stats.wins, stats.losses, stats.draws);
+        Elo elo; // Declare elo outside of if blocks to keep it in scope
+        if (config.report_penta == true) {
+            elo = Elo(stats.penta_WW, stats.penta_WD, stats.penta_WL, stats.penta_DD,
+                      stats.penta_LD, stats.penta_LL);
+        } else {
+            elo = Elo(stats.wins, stats.losses, stats.draws);
         }
 
         std::stringstream ss;
