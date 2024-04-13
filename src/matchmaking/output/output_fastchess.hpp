@@ -27,7 +27,7 @@ class Fastchess : public IOutput {
                          stats.penta_LD, stats.penta_LL);
         }
         else if (config.report_penta == false) {
-            const Elo elo(stats.wins, stats.losses, stats.draws)
+            const Elo elo(stats.wins, stats.losses, stats.draws);
         }
 
         std::stringstream ss;
