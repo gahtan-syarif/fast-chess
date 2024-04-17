@@ -17,6 +17,7 @@ RoundRobin::RoundRobin(const options::Tournament& tournament_config,
     sprt_ = SPRT(tournament_options_.sprt.alpha, tournament_options_.sprt.beta,
                  tournament_options_.sprt.elo0, tournament_options_.sprt.elo1,
                  tournament_options_.sprt.logistic_bounds);
+    const auto stats = result_.getStats(engine_configs[0].name, engine_configs[1].name);
     match_count_ = stats.wins + stats.losses + stats.draws;
 }
 
@@ -118,7 +119,6 @@ void RoundRobin::create() {
 void RoundRobin::updateSprtStatus(const std::vector<EngineConfiguration>& engine_configs) {
     if (!sprt_.isValid()) return;
 
-    const auto stats = result_.getStats(engine_configs[0].name, engine_configs[1].name);
     const auto llr   = tournament_options_.report_penta
                            ? sprt_.getLLR(stats.penta_WW, stats.penta_WD, stats.penta_WL,
                                           stats.penta_DD, stats.penta_LD, stats.penta_LL)
