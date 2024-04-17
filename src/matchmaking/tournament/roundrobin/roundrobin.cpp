@@ -17,6 +17,7 @@ RoundRobin::RoundRobin(const options::Tournament& tournament_config,
     sprt_ = SPRT(tournament_options_.sprt.alpha, tournament_options_.sprt.beta,
                  tournament_options_.sprt.elo0, tournament_options_.sprt.elo1,
                  tournament_options_.sprt.logistic_bounds);
+    match_count_ = stats.wins + stats.losses + stats.draws + 1;
 }
 
 void RoundRobin::start() {
