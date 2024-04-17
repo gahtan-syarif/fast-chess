@@ -30,7 +30,7 @@ class RoundRobin : public BaseTournament {
 
    protected:
     /// @brief creates the matches
-    void create() override;
+    void create(const std::vector<EngineConfiguration> &engine_configs) override;
 
    private:
     /// @brief update the current running sprt. SPRT Config has to be valid.
