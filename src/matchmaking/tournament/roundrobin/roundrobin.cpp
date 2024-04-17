@@ -119,6 +119,7 @@ void RoundRobin::create() {
 void RoundRobin::updateSprtStatus(const std::vector<EngineConfiguration>& engine_configs) {
     if (!sprt_.isValid()) return;
 
+    const auto stats = result_.getStats(engine_configs[0].name, engine_configs[1].name);
     const auto llr   = tournament_options_.report_penta
                            ? sprt_.getLLR(stats.penta_WW, stats.penta_WD, stats.penta_WL,
                                           stats.penta_DD, stats.penta_LD, stats.penta_LL)
