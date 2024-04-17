@@ -40,7 +40,7 @@ class BaseTournament {
 
    protected:
     /// @brief creates the matches
-    virtual void create() = 0;
+    virtual void create(const std::vector<EngineConfiguration>& engine_configs) = 0;
 
     using start_callback    = std::function<void()>;
     using finished_callback = std::function<void(const Stats &stats, const std::string &reason)>;
