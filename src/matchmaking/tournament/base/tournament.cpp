@@ -33,7 +33,7 @@ BaseTournament::BaseTournament(const options::Tournament &config,
 void BaseTournament::start() {
     Logger::log<Logger::Level::TRACE>("Starting...");
 
-    create(std::vector<EngineConfiguration>& engine_configs);
+    create(const std::vector<EngineConfiguration>& engine_configs);
 }
 
 void BaseTournament::stop() {
