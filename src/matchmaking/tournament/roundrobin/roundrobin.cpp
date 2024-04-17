@@ -27,7 +27,7 @@ void RoundRobin::start() {
     }
 }
 
-void RoundRobin::create() {
+void RoundRobin::create(const std::vector<EngineConfiguration>& engine_configs) {
     total_ = (engine_configs_.size() * (engine_configs_.size() - 1) / 2) *
              tournament_options_.rounds * tournament_options_.games;
     const auto stats = result_.getStats(engine_configs[0].name, engine_configs[1].name);
