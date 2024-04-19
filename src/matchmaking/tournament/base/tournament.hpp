@@ -51,6 +51,7 @@ class BaseTournament {
            }
        }
        match_count_ = total_wins + total_losses + total_draws;
+       total_       = total_wins + total_losses + total_draws;
        initial_id_  = match_count_;
     }
 
@@ -61,6 +62,8 @@ class BaseTournament {
    protected:
     /// @brief number of games played
     std::atomic<uint64_t> match_count_;
+    /// @brief number of games to be played
+    std::atomic<uint64_t> total_;
     uint64_t initial_id_;
 
     /// @brief creates the matches
