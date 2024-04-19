@@ -38,8 +38,5 @@ class RoundRobin : public BaseTournament {
     void updateSprtStatus(const std::vector<EngineConfiguration> &engine_configs);
 
     SPRT sprt_ = SPRT();
-
-    /// @brief number of games to be played
-    std::atomic<uint64_t> total_ = 0;
 };
 }  // namespace fast_chess
