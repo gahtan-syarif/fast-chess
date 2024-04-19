@@ -61,7 +61,7 @@ void RoundRobin::create() {
         const auto second  = engine_configs_[j];
         auto configs       = std::pair{engine_configs_[i], engine_configs_[j]};
 
-        for (int g = 0; g < (tournament_options_.games - initial_id_); g++) {
+        for (uint64_t g = 0; g < (tournament_options_.games - initial_id_); g++) {
             const std::size_t game_id = round_id * tournament_options_.games + (g + 1);
 
             // callback functions, do not capture by reference
