@@ -87,9 +87,8 @@ void RoundRobin::create() {
 
                 // Only print the interval if the pair is complete or we are not tracking
                 // penta stats.
+                const auto updated_stats = result_.getStats(first.name, second.name);    
                 if (report) {
-                    const auto updated_stats = result_.getStats(first.name, second.name);
-
                     output_->printInterval(sprt_, updated_stats, first.name, second.name);
                 }
 
