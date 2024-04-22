@@ -175,8 +175,8 @@ EXAMPLES
         To resume a game from a saved configuration:
             $ fast-chess -config file=config.json
 
-AUTHOR
-        fast-chess was written by Disservin, Szil and PGG106.
+AUTHORS
+        fast-chess was written by Disservin, Szil, PGG106, and contributors.
 
 REPORTING BUGS
         Report any bugs to https://github.com/Disservin/fast-chess/issues.
