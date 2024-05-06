@@ -444,7 +444,7 @@ void parseRandomSeed(int &, int, char const *[], ArgumentData &argument_data) {
 void parseRepeat(int &i, int argc, char const *argv[], ArgumentData &argument_data) {
     try {
         parseValue(i, argc, argv, argument_data.tournament_options.rounds);
-        int tmp = std::stoi(argv[i]);
+        std::stoi(argv[i]);
     } catch (const std::exception &e) {
         argument_data.tournament_options.games = 2;
     }
