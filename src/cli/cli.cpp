@@ -444,8 +444,9 @@ void parseRandomSeed(int &, int, char const *[], ArgumentData &argument_data) {
 void parseRepeat(int &i, int argc, char const *argv[], ArgumentData &argument_data) {
     try {
         parseValue(i, argc, argv, argument_data.tournament_options.rounds);
-        if(argv[i] == "") throw std::runtime_error("");
-        std::stoi(argv[i]);
+        bool is_number = !argv[i].empty() && std::find_if(argv[i].begin(), argv[i].end(), 
+        [](unsigned char c) { return !std::isdigit(c); }) == argv[i].end();
+        if(!is_number) throw std::runtime_error("");
     } catch (const std::exception &e) {
         argument_data.tournament_options.games = 2;
     }
