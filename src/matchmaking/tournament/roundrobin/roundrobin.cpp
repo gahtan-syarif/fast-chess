@@ -88,12 +88,12 @@ void RoundRobin::create() {
 
             // game_id starts 1 and round_id starts 0
             const auto interval_index = tournament_options_.report_penta ? round_id + 1 : game_id;
-            cont bool final_match     = game_id == static_cast<int>(tournament_options_.games * 
+            const bool final_game     = game_id == static_cast<int>(tournament_options_.games * 
                                                                     tournament_options_.rounds)
             // Only print the interval if the pair is complete or we are not tracking
             // penta stats.
             if (report && (interval_index % tournament_options_.ratinginterval == 0
-                || final_match)) {
+                || final_game)) {
                 const auto updated_stats = result_.getStats(first.name, second.name);
 
                 output_->printInterval(sprt_, updated_stats, first.name, second.name);
