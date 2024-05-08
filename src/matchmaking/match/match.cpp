@@ -215,7 +215,7 @@ bool Match::playMove(Player& us, Player& opponent) {
     }
 
     maxmoves_tracker_.update();
-    
+
     const auto best_move = us.engine.bestmove();
     const auto move      = uci::uciToMove(board_, best_move);
     const auto legal     = isLegal(move);
