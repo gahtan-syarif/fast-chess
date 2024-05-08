@@ -19,6 +19,9 @@ class DrawTracker {
 
     void update(const int score, const int move_count, engine::ScoreType score_type, chess::Color color,
                std::string Fen) noexcept {
+        std::vector<std::string> fen_vector = str_utils::splitString(Fen, ' ');
+        //reset when hmvc is 0
+        if (fen_vector[4] == "0") draw_moves = 0;
         if (move_count >= move_number_ && std::abs(score) <= draw_score &&
             score_type == engine::ScoreType::CP) {
             //start increment only from odd plies
@@ -27,9 +30,6 @@ class DrawTracker {
         } else {
             draw_moves = 0;
         }
-        std::vector<std::string> fen_vector = str_utils::splitString(Fen, ' ');
-        //reset when hmvc is 0
-        if (fen_vector[4] == "0") draw_moves = 0;
     }
 
     [[nodiscard]] bool adjudicatable() const noexcept { return draw_moves >= move_count_ * 2; }
