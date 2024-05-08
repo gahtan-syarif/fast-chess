@@ -214,6 +214,8 @@ bool Match::playMove(Player& us, Player& opponent) {
         return false;
     }
 
+    maxmoves_tracker_.update();
+    
     const auto best_move = us.engine.bestmove();
     const auto move      = uci::uciToMove(board_, best_move);
     const auto legal     = isLegal(move);
@@ -236,7 +238,6 @@ bool Match::playMove(Player& us, Player& opponent) {
     draw_tracker_.update(us.engine.lastScore(), data_.moves.size() / 2, us.engine.lastScoreType(), 
                          ~board_.sideToMove(), board_.getFen());
     resign_tracker_.update(us.engine.lastScore(), us.engine.lastScoreType(), ~board_.sideToMove());
-    maxmoves_tracker_.update();
     return !adjudicate(us, opponent);
 }
 
