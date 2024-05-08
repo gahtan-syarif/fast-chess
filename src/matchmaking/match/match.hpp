@@ -25,7 +25,7 @@ class DrawTracker {
         if (move_count >=33){
            std::cout << "move_count: " << move_count << "\n";
            std::cout << "hmvc: " << fen_vector[4] << "\n";
-           std::cout << "draw_moves: "draw_moves << "\n";
+           std::cout << "draw_moves: " << draw_moves << "\n";
         }
         if (move_count >= move_number_ && std::abs(score) <= draw_score &&
             score_type == engine::ScoreType::CP) {
@@ -36,7 +36,7 @@ class DrawTracker {
             draw_moves = 0;
         }
         if (move_count >=33){
-           std::cout << "draw_moves_final: "draw_moves << "\n";
+           std::cout << "draw_moves_final: " << draw_moves << "\n";
         }
     }
 
