@@ -22,6 +22,11 @@ class DrawTracker {
         std::vector<std::string> fen_vector = str_utils::splitString(Fen, ' ');
         //reset when hmvc is 0
         if (fen_vector[4] == "0") draw_moves = 0;
+        if (move_count >=33){
+           std::cout << "move_count: " << move_count << "\n";
+           std::cout << "hmvc: " << fen_vector[4] << "\n";
+           std::cout << "draw_moves: "draw_moves << "\n";
+        }
         if (move_count >= move_number_ && std::abs(score) <= draw_score &&
             score_type == engine::ScoreType::CP) {
             //start increment only from odd plies
@@ -29,6 +34,9 @@ class DrawTracker {
                draw_moves++;
         } else {
             draw_moves = 0;
+        }
+        if (move_count >=33){
+           std::cout << "draw_moves_final: "draw_moves << "\n";
         }
     }
 
