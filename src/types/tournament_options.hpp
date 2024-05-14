@@ -102,6 +102,7 @@ struct Tournament {
     int overhead    = 0;
 
     bool recover      = false;
+    bool noswap       = false;
     bool report_penta = true;
     bool affinity     = false;
     bool randomseed   = false;
@@ -110,6 +111,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ORDERED_JSON(Tournament, resign, draw, maxmov
                                                 epd, sprt, event_name, site, output, seed, variant,
                                                 ratinginterval, scoreinterval, autosaveinterval, games, 
                                                 rounds, concurrency, overhead, recover, report_penta,
-                                                affinity, randomseed)
+                                                affinity, randomseed, noswap)
 
 }  // namespace fast_chess::options
