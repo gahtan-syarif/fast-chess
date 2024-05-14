@@ -76,7 +76,7 @@ void RoundRobin::create() {
         const auto second         = engine_configs_[j];
         auto configs              = std::pair{engine_configs_[i], engine_configs_[j]};
 
-        if (g == 1) {
+        if (g == 1 && !tournament_options_.noswap) {
             std::swap(configs.first, configs.second);
         }
 
