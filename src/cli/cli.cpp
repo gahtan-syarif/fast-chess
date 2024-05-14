@@ -459,6 +459,10 @@ void parseRecover(int &, int, char const *[], ArgumentData &argument_data) {
     argument_data.tournament_options.recover = true;
 }
 
+void parseNoswap(int &, int, char const *[], ArgumentData &argument_data) {
+    argument_data.tournament_options.noswap = true;
+}
+
 void parseRandomSeed(int &, int, char const *[], ArgumentData &argument_data) {
     argument_data.tournament_options.randomseed = true;
 }
@@ -587,6 +591,7 @@ OptionsParser::OptionsParser(int argc, char const *argv[]) {
     addOption("help", parseHelp);
     addOption("-help", parseHelp);
     addOption("recover", parseRecover);
+    addOption("noswap", parseNoswap);
     addOption("randomseed", parseRandomSeed);
     addOption("repeat", parseRepeat);
     addOption("variant", parseVariant);
