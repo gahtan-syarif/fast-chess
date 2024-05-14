@@ -139,6 +139,9 @@ OPTIONS
             Automatically picks a random seed value between 0 and (2^32 - 1)
             for opening book randomization.
 
+        -noswap
+            Prevents the engines from swapping sides with each other.
+
         -log file=NAME level=LEVEL
             Specify a log file with a specific log level.
 
