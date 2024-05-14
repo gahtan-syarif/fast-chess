@@ -70,12 +70,12 @@ class UciEngine : protected process::Process {
     [[nodiscard]] const EngineConfiguration &getConfig() const noexcept { return config_; }
 
     // @TODO: expose this to the user
-    static constexpr std::chrono::milliseconds initialize_time = std::chrono::milliseconds(60000);
+    static constexpr std::chrono::milliseconds initialize_time = std::chrono::milliseconds(1000);
     static constexpr std::chrono::milliseconds ping_time_      = std::chrono::milliseconds(
 #ifdef NDEBUG
-        60000
+        1000
 #else
-        60000
+        1000
 #endif
     );
 
