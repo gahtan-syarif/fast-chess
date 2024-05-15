@@ -185,6 +185,8 @@ void parsePgnOut(int &i, int argc, char const *argv[], ArgumentData &argument_da
                 argument_data.tournament_options.pgn.track_seldepth = value == "true";
             } else if (key == "nps") {
                 argument_data.tournament_options.pgn.track_nps = value == "true";
+            } else if (key == "min") {
+                argument_data.tournament_options.pgn.min = value == "true";
             } else if (key == "notation") {
                 if (value == "san") {
                     argument_data.tournament_options.pgn.notation = NotationType::SAN;
@@ -545,7 +547,7 @@ void parseAffinity(int &, int, char const *[], ArgumentData &argument_data) {
     argument_data.tournament_options.affinity = true;
 }
 
-void parseDebug(int &, int, char const *[], ArgumentData &argument_data) {
+void parseDebug(int &, int, char const *[], ArgumentData &) {
     // throw error
     std::string error_message = "Error; 'debug' option does not exist in fast-chess."
                                 " Use the 'log' option instead to write all engine input"
