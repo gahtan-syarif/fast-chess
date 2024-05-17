@@ -92,6 +92,7 @@ struct Tournament {
 #endif
 
     uint32_t seed = 951356066;
+    std::string config = "config.json";
 
     int ratinginterval   = 10;
     int scoreinterval    = 1;
@@ -111,6 +112,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ORDERED_JSON(Tournament, resign, draw, maxmov
                                                 epd, sprt, event_name, site, output, seed, variant,
                                                 ratinginterval, scoreinterval, autosaveinterval, games, 
                                                 rounds, concurrency, overhead, recover, report_penta,
-                                                affinity, randomseed)
+                                                affinity, randomseed, config)
 
 }  // namespace fast_chess::options
