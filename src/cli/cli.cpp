@@ -493,6 +493,10 @@ void parseTournament(int &i, int argc, char const *argv[], ArgumentData &) {
     parseValue(i, argc, argv, val);
 }
 
+void parseConfig(int &i, int argc, char const *argv[], ArgumentData &argument_data) {
+    parseValue(i, argc, argv, argument_data.tournament_options.config);
+}
+
 // .\fast-chess.exe -quick cmd=smallbrain.exe cmd=smallbrain-2.exe
 // book="UHO_XXL_2022_+110_+139.epd"
 void parseQuick(int &i, int argc, char const *argv[], ArgumentData &argument_data) {
@@ -593,6 +597,7 @@ OptionsParser::OptionsParser(int argc, char const *argv[]) {
     addOption("repeat", parseRepeat);
     addOption("variant", parseVariant);
     addOption("tournament", parseTournament);
+    addOption("config", parseConfig);
     addOption("quick", parseQuick);
     addOption("use-affinity", parseAffinity);
     addOption("debug", parseDebug);
