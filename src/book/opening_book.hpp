@@ -36,10 +36,8 @@ class OpeningBook {
    private:
     void setup(const std::string& file, FormatType type);
 
-    using epd_book = std::vector<std::string>;
+    using epd_book = std::vector<chess::Board>;
     using pgn_book = std::vector<pgn::Opening>;
-
-    std::vector<chess::Board> boards_;
 
     std::size_t start_      = 0;
     std::size_t matchcount_ = 0;
