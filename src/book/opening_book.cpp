@@ -35,8 +35,12 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
         book_ = epd_book{};
 
         while (util::safeGetline(openingFile, line)) {
-            if (!line.empty()) std::visit([](auto& book) { book.emplace_back(line); }, book_);
-            book_.shrink_to_fit();
+            if (!line.empty()) {
+                std::visit([&line](auto& book) {
+                    book.emplace_back(line);
+                    book.shrink_to_fit();
+                }, book_);
+            }
         }
 
         openingFile.close();
