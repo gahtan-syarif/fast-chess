@@ -22,7 +22,8 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
 
     if (type == FormatType::PGN) {
         book_ = pgn::PgnReader(file, plies_).getOpenings();
-        book_.shrink_to_fit()
+        
+        std::visit([](auto& book) { book.shrink_to_fit(); }, book_);
 
         if (std::get<pgn_book>(book_).empty()) {
             throw std::runtime_error("No openings found in PGN file: " + file);
