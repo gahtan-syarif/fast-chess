@@ -23,6 +23,9 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
     if (type == FormatType::PGN) {
         book_ = pgn::PgnReader(file, plies_).getOpenings();
 
+        std::cout << "size: " << std::get<pgn_book>(book_).size() << std::endl
+        std::cout << "capacity: " << std::get<pgn_book>(book_).capacity() << std::endl
+
         if (std::get<pgn_book>(book_).empty()) {
             throw std::runtime_error("No openings found in PGN file: " + file);
         }
@@ -40,6 +43,9 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
         openingFile.close();
 
         book_ = epd;
+
+        std::cout << "size: " << std::get<epd_book>(book_).size() << std::endl
+        std::cout << "capacity: " << std::get<epd_book>(book_).capacity() << std::endl
 
         if (std::get<epd_book>(book_).empty()) {
             throw std::runtime_error("No openings found in EPD file: " + file);
