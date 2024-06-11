@@ -22,6 +22,7 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
 
     if (type == FormatType::PGN) {
         book_ = pgn::PgnReader(file, plies_).getOpenings();
+        book_.shrink_to_fit()
 
         if (std::get<pgn_book>(book_).empty()) {
             throw std::runtime_error("No openings found in PGN file: " + file);
@@ -31,15 +32,14 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
         openingFile.open(file);
 
         std::string line;
-        std::vector<std::string> epd;
+        book_ = epd_book{};
 
         while (util::safeGetline(openingFile, line)) {
-            if (!line.empty()) epd.emplace_back(line);
+            if (!line.empty()) std::visit([](auto& book) { book.emplace_back(line); }, book_);
+            book_.shrink_to_fit();
         }
 
         openingFile.close();
-
-        book_ = epd;
 
         if (std::get<epd_book>(book_).empty()) {
             throw std::runtime_error("No openings found in EPD file: " + file);
