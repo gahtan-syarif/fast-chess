@@ -31,10 +31,10 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
         openingFile.open(file);
 
         std::string line;
-        std::vector<std::string> epd;
+        std::vector<chess::Board> epd;
 
         while (util::safeGetline(openingFile, line)) {
-            if (!line.empty()) epd.emplace_back(line);
+            if (!line.empty()) epd.emplace_back(chess::Board(line));
         }
 
         openingFile.close();
@@ -63,7 +63,7 @@ pgn::Opening OpeningBook::fetch() noexcept {
     }
 
     if (std::holds_alternative<epd_book>(book_)) {
-        const auto fen = std::get<epd_book>(book_)[idx % book_size];
+        const auto fen = std::get<epd_book>(book_)[idx % book_size].getFen();
         return {fen, {}, chess::Board(fen).sideToMove()};
     } else if (std::holds_alternative<pgn_book>(book_)) {
         return std::get<pgn_book>(book_)[idx % book_size];
