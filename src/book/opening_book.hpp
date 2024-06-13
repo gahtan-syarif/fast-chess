@@ -53,6 +53,37 @@ class OpeningBook {
         std::visit(truncate, book_);
     }
 
+    // Allocate new buffer
+    void trim_and_compact() {
+        const auto trim = [this](auto& vec) {
+            if (vec.empty()) {
+                file_data_.reset();
+                return;
+            }
+    
+            const char* min_ptr = vec.front().data();
+            const char* max_ptr = vec.front().data() + vec.front().size();
+   
+            for (const auto& sv : vec) {
+                if (sv.data() < min_ptr) min_ptr = sv.data();
+                if (sv.data() + sv.size() > max_ptr) max_ptr = sv.data() + sv.size();
+            }
+   
+            std::size_t new_size = max_ptr - min_ptr;
+            auto new_buffer = std::make_unique<char[]>(new_size);
+   
+            std::copy(min_ptr, max_ptr, new_buffer.get());
+   
+            for (auto& sv : vec) {
+                sv = std::string_view(new_buffer.get() + (sv.data() - min_ptr), sv.size());
+            }
+   
+            file_data_ = std::move(new_buffer);
+        };
+   
+        std::visit(trim, book_);
+    }
+
     [[nodiscard]] std::optional<std::size_t> fetchId() noexcept;
 
     void setInternalOffset(std::size_t offset) noexcept { matchcount_ = offset; }
