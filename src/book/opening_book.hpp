@@ -53,7 +53,7 @@ class OpeningBook {
         std::visit(truncate, book_);
     }
 
-    // Allocate new buffer
+    // trims file_data_
     void trim_and_compact() {
         const auto compact = [this](auto& vec) {
             // Calculate total size needed for file_data_
