@@ -55,33 +55,28 @@ class OpeningBook {
 
     // Allocate new buffer
     void trim_and_compact() {
-        const auto trim = [this](auto& vec) {
-            if (vec.empty()) {
-                file_data_.reset();
-                return;
-            }
-    
-            const char* min_ptr = vec.front().data();
-            const char* max_ptr = vec.front().data() + vec.front().size();
-   
+        const auto compact = [this](auto& vec) {
+            // Calculate total size needed for file_data_
+            std::size_t total_size = 0;
             for (const auto& sv : vec) {
-                if (sv.data() < min_ptr) min_ptr = sv.data();
-                if (sv.data() + sv.size() > max_ptr) max_ptr = sv.data() + sv.size();
+                total_size += sv.size() + 1; // +1 for '\n' or '\0'
             }
-   
-            std::size_t new_size = max_ptr - min_ptr;
-            auto new_buffer = std::make_unique<char[]>(new_size);
-   
-            std::copy(min_ptr, max_ptr, new_buffer.get());
-   
-            for (auto& sv : vec) {
-                sv = std::string_view(new_buffer.get() + (sv.data() - min_ptr), sv.size());
+
+            // Allocate new memory for file_data_
+            std::unique_ptr<char[]> new_file_data = std::make_unique<char[]>(total_size);
+            char* ptr = new_file_data.get();
+
+            // Copy data from vec to new_file_data
+            for (const auto& sv : vec) {
+                std::copy(sv.begin(), sv.end(), ptr);
+                *ptr++ = '\n'; // Add newline separator
             }
-   
-            file_data_ = std::move(new_buffer);
+
+            // Replace old file_data_ with the new one
+            file_data_ = std::move(new_file_data);
         };
-   
-        std::visit(trim, book_);
+
+        std::visit(compact, book_);
     }
 
     [[nodiscard]] std::optional<std::size_t> fetchId() noexcept;
