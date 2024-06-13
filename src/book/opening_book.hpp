@@ -45,8 +45,8 @@ class OpeningBook {
    void truncate() {
         const auto truncate = [this](auto& vec) {
             if (vec.size() > static_cast<std::size_t>(rounds_)) {
-                std::vector<typename decltype(vec)::value_type> temp(vec.begin(), vec.begin() + rounds_);
-                vec.swap(temp);
+                vec.resize(rounds_);
+                vec.shrink_to_fit();
             }
         };
 
