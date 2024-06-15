@@ -56,6 +56,11 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
             end++;
         }
 
+        // Handle the last line if it doesn't end with a newline
+        if (end != start) {
+            std::get<epd_book>(book_).emplace_back(std::string_view(start, end - start));
+        }
+
         std::get<epd_book>(book_).shrink_to_fit();
     }
 
