@@ -50,9 +50,18 @@ class OpeningBook {
         std::visit(truncate, book_);
     }
 
-    // Shrink book vector
-    void shrink() {
-        const auto shrink = [](auto& vec) { vec.shrink_to_fit(); };
+    // Shrink book vector to deallocate memory
+    void shrink(FormatType type) {
+        const auto shrink = [type](auto& vec) { 
+           if (type == FormatType::EPD) {
+              std::vector<std::string> tmp(vec);
+              vec.swap(tmp);
+           } else {
+              std::vector<pgn::Opening> tmp(vec);
+              vec.swap(tmp);
+           }
+           vec.shrink_to_fit();
+        };
 
         std::visit(shrink, book_);
     }
