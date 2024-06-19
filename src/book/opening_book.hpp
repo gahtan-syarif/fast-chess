@@ -53,10 +53,10 @@ class OpeningBook {
     // Shrink book vector to deallocate memory
     void shrink(FormatType type) {
         const auto shrink = [type](auto& vec) { 
-           if (type == FormatType::EPD) {
+           if constexpr (type == FormatType::EPD) {
               std::vector<std::string> tmp(vec.begin(), vec.end());
               vec.swap(tmp);
-           } else if (type == FormatType::PGN) {
+           } else if constexpr (type == FormatType::PGN) {
               std::vector<pgn::Opening> tmp(vec.begin(), vec.end());
               vec.swap(tmp);
            }
