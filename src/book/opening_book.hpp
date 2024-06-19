@@ -54,8 +54,11 @@ class OpeningBook {
     void shrink(FormatType type) {
         const auto shrink = [type](auto& vec) { 
            if (type == FormatType::EPD) {
-              std::vector<std::string> tmp(vec.begin(), vec.end());
-              vec.swap(tmp);
+              std::vector<std::string> tmp(std::get<epd_book>(vec).begin(), std::get<epd_book>(vec).end());
+              std::get<epd_book>(vec).swap(tmp);
+           } else {
+              std::vector<pgn::Opening> tmp(std::get<pgn_book>(vec).begin(), std::get<pgn_book>(vec).end());
+              std::get<pgn_book>(vec).swap(tmp);
            }
            vec.shrink_to_fit();
         };
