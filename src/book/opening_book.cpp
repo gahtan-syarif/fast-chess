@@ -57,7 +57,7 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
 
     rotate(offset_);
     truncate(rounds_);
-    shrink();
+    shrink(type);
 }
 
 [[nodiscard]] std::optional<std::size_t> OpeningBook::fetchId() noexcept {
