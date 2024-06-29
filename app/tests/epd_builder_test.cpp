@@ -81,7 +81,7 @@ Nf6 {+10.15/18, 1.821s, engine1 got checkmated} 0-1
 )";
 
         epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
-        CHECK(Epd_builder.get() == expected);
+        CHECK(epd_builder.get() == expected);
     }
 
     TEST_CASE("EPD Creation Black Start") {
