@@ -26,19 +26,7 @@ TEST_SUITE("EPD Builder Tests") {
         options::Tournament options;
         options.site = "localhost";
 
-        std::string expected = R"([Event "Fast-Chess Tournament"]
-[Site "localhost"]
-[Round "1"]
-[White "engine1"]
-[Black "engine2"]
-[Result "1-0"]
-[PlyCount "4"]
-[TimeControl "-"]
-
-1. e4 {+1.00/15, 1.321s} e5 {+1.23/15, 0.430s} 2. Nf3 {+1.45/16, 0.310s}
-Nf6 {+10.15/18, 1.821s, engine2 got checkmated} 1-0
-
-)";
+        std::string expected = "rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - hmvc 2; fmvn 3;";
 
         epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
         CHECK(epd_builder.get() == expected);
