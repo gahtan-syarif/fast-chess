@@ -40,8 +40,8 @@ Nf6 {+10.15/18, 1.821s, engine2 got checkmated} 1-0
 
 )";
 
-        EPD::EPDBuilder EPD_builder = EPD::EPDBuilder(match_data, options, 1);
-        CHECK(EPD_builder.get() == expected);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
+        CHECK(epd_builder.get() == expected);
     }
 
     TEST_CASE("EPD Creation Black Win") {
@@ -80,8 +80,8 @@ Nf6 {+10.15/18, 1.821s, engine1 got checkmated} 0-1
 
 )";
 
-        EPD::EPDBuilder EPD_builder = EPD::EPDBuilder(match_data, options, 1);
-        CHECK(EPD_builder.get() == expected);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
+        CHECK(Epd_builder.get() == expected);
     }
 
     TEST_CASE("EPD Creation Black Start") {
@@ -121,8 +121,8 @@ Nc5 {+1.45/16, 0.310s, aborted} *
 
 )";
 
-        EPD::EPDBuilder EPD_builder = EPD::EPDBuilder(match_data, options, 1);
-        CHECK(EPD_builder.get() == expected);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
+        CHECK(epd_builder.get() == expected);
     }
 
     TEST_CASE("EPD Creation Fixed Time per Move") {
@@ -164,8 +164,8 @@ Nc5 {+1.45/16, 0.310s, aborted} *
 
 )";
 
-        EPD::EPDBuilder EPD_builder = EPD::EPDBuilder(match_data, options, 1);
-        CHECK(EPD_builder.get() == expected);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
+        CHECK(epd_builder.get() == expected);
     }
 
     TEST_CASE("EPD Creation Multiple Fixed Time per Move") {
@@ -208,7 +208,7 @@ Nc5 {+1.45/16, 0.310s, aborted} *
 
 )";
 
-        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options, 1);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
         CHECK(epd_builder.get() == expected);
     }
 }
