@@ -26,7 +26,7 @@ TEST_SUITE("EPD Builder Tests") {
         options::Tournament options;
         options.site = "localhost";
 
-        std::string expected = R"rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - hmvc 2; fmvn 3;";
+        std::string expected = "rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - hmvc 2; fmvn 3;\n";
 
         epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options);
         CHECK(epd_builder.get() == expected);
