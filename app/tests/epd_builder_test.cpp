@@ -208,8 +208,8 @@ Nc5 {+1.45/16, 0.310s, aborted} *
 
 )";
 
-        EPD::EPDBuilder EPD_builder = EPD::EPDBuilder(match_data, options, 1);
-        CHECK(EPD_builder.get() == expected);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data, options, 1);
+        CHECK(epd_builder.get() == expected);
     }
 }
 }  // namespace fast_chess
