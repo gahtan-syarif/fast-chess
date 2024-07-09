@@ -142,7 +142,7 @@ void parseEngineKeyValues(EngineConfiguration &engineConfig, const std::string &
     else if (key == "plies" || key == "depth")
         engineConfig.limit.plies = std::stoll(value);
     else if (key == "dir")
-        if (value == "./" || value == ".\\") engineconfig.dir = ".";
+        if (value == "./" || value == ".\\") engineConfig.dir = ".";
         else engineConfig.dir = value;
     else if (key == "args")
         engineConfig.args = value;
