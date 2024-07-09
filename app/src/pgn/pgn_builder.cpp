@@ -77,9 +77,7 @@ PgnBuilder::PgnBuilder(const MatchData &match, const options::Tournament &tourna
     for (auto it = match_.moves.begin(); it != match_.moves.end(); ++it) {
         const auto illegal = !it->legal;
 
-        if (illegal) {
-            break;
-        }
+        
 
         const auto n_dots   = first_move && board.sideToMove() == chess::Color::BLACK ? 3 : 1;
         const auto last     = std::next(it) == match_.moves.end();
@@ -99,6 +97,9 @@ PgnBuilder::PgnBuilder(const MatchData &match, const options::Tournament &tourna
         line_length += move_str.size();
 
         first_move = false;
+        if (illegal) {
+            break;
+        }
     }
 
     // 8.2.6: Game Termination Markers
