@@ -27,6 +27,7 @@ class BaseTournament {
     virtual ~BaseTournament() {
         Logger::trace("Destroying tournament...");
         saveJson();
+        Logger::info("Finished match");
     }
 
     virtual void start();
