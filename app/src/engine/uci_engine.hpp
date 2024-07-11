@@ -30,10 +30,7 @@ class UciEngine : protected process::Process {
     UciEngine &operator=(const UciEngine &) = delete;
     UciEngine &operator=(UciEngine &&)      = delete;
 
-    ~UciEngine() override { 
-       quit(); 
-       Logger::info("Finished match");
-    }
+    ~UciEngine() override { quit(); }
 
     // Starts the engine, does nothing after the first call.
     void start();
