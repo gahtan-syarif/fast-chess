@@ -51,6 +51,7 @@ void BaseTournament::saveJson() {
     file << std::setw(4) << jsonfile << std::endl;
 
     Logger::info("Saved results.");
+    Logger::info("Finished match");
 }
 
 void BaseTournament::stop() {
