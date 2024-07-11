@@ -58,7 +58,6 @@ void BaseTournament::stop() {
     atomic::stop = true;
     Logger::trace("Stopping threads...");
     pool_.kill();
-    Logger::info("Finished match");
 }
 
 void BaseTournament::playGame(const std::pair<EngineConfiguration, EngineConfiguration> &configs, start_callback start,
