@@ -21,6 +21,9 @@ void sanitize(config::Tournament& config) {
     }
 
     // fix wrong config
+    if (config.seed == std::nullopt && config.opening.order == OrderType::RANDOM && !config.opening.file.empty()) 
+        throw std::runtime_error("Error; No opening book seed specified. Use the -srand or -randomseed command to specify a seed");
+    
     if (config.report_penta && config.output == OutputType::CUTECHESS) config.report_penta = false;
 
     if (config.report_penta && config.games != 2) config.report_penta = false;
@@ -68,13 +71,6 @@ void sanitize(config::Tournament& config) {
     if (config.ratinginterval == 0) config.ratinginterval = std::numeric_limits<int>::max();
 
     if (config.scoreinterval == 0) config.scoreinterval = std::numeric_limits<int>::max();
-
-    if (config.seed == 951356066 && !config.randomseed && !config.opening.file.empty() &&
-        config.opening.order == OrderType::RANDOM) {
-        Logger::warn(
-            "Warning: No opening book seed specified! Consider specifying one, otherwise the match "
-            "will be played using the default seed of 951356066.");
-    }
 }
 
 void sanitize(std::vector<EngineConfiguration>& configs) {
