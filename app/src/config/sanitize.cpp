@@ -21,7 +21,7 @@ void sanitize(config::Tournament& config) {
     }
 
     // fix wrong config
-    if (config.seed == std::nullopt && config.opening.order == OrderType::RANDOM && !config.opening.file.empty()) 
+    if (!config.seed.has_value() && config.opening.order == OrderType::RANDOM && !config.opening.file.empty()) 
         throw std::runtime_error("Error; No opening book seed specified. Use the -srand or -randomseed command to specify a seed");
     
     if (config.report_penta && config.output == OutputType::CUTECHESS) config.report_penta = false;
