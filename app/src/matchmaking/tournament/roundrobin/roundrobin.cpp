@@ -60,7 +60,10 @@ void RoundRobin::create() {
         }
 
         // callback functions, do not capture by reference
-        const auto start = [this, configs, game_id]() { output_->startGame(configs, game_id, total_); };
+        const auto start = [this, configs, game_id]() { 
+            std::lock_guard<std::mutex> lock(output_mutex_);
+            output_->startGame(configs, game_id, total_); 
+        };
 
         // callback functions, do not capture by reference
         const auto finish = [this, configs, first, second, game_id, round_id](
