@@ -49,7 +49,7 @@ struct Tournament {
     bool report_penta    = true;
 #endif
 
-    std::optional<uint64_t> seed = 951356066;
+    std::optional<uint64_t> seed = std::nullopt;
 
     int scoreinterval = 1;
 
