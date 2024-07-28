@@ -91,7 +91,7 @@ void RoundRobin::create() {
 
             // Only print the interval if the pair is complete or we are not tracking
             // penta stats.
-            if ((report && ratinginterval_index % cfg.ratinginterval == 0) || match_count_ + 1 == total_) {
+            if ((report && ratinginterval_index % cfg.ratinginterval == 0) || match_count_ + 1 == total_ || atomic::stop) {
                 output_->printInterval(sprt_, updated_stats, first.name, second.name, engines, cfg.opening.file);
             }
 
