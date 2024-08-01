@@ -43,12 +43,12 @@ bool TimeControl::updateTime(const int64_t elapsed_millis) noexcept {
 
     time_left_ -= elapsed_millis;
 
-    if (time_left_ < -limits_.timemargin) {
+    if (time_left_ <= -limits_.timemargin) {
         return false;
     }
 
-    if (time_left_ < 0) {
-        time_left_ = 0;
+    if (time_left_ <= 0) {
+        time_left_ = 1;
     }
 
     time_left_ += limits_.increment;
