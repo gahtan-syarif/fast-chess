@@ -108,7 +108,7 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uciOutput[0].line == "line0");
         CHECK(uciOutput[1].line == "line1");
         CHECK(uciOutput[2].line == "uciok");
-        CHECK(uci_engine.isready());
+        CHECK(uci_engine.isready() == engine::process::Status::OK);
 
         CHECK(uci_engine.writeEngine("sleep"));
         const auto res = uci_engine.readEngine("done", std::chrono::milliseconds(100));
@@ -141,7 +141,7 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci_engine.output()[1].line == "line1");
         CHECK(uci_engine.output()[2].line == "uciok");
 
-        CHECK(uci_engine.writeEngine("isready"));
+        CHECK(uci_engine.writeEngine("isready") == engine::process::Status::OK);
         const auto res2 = uci_engine.readEngine("readyok");
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine.output().size() == 1);
