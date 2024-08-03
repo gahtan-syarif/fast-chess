@@ -52,8 +52,9 @@ namespace {
 CountingSemaphore semaphore(16);
 }
 
-bool UciEngine::isready(std::chrono::milliseconds threshold) {
-    if (alive() != process::Status::OK) return false;
+Status UciEngine::isready(std::chrono::milliseconds threshold) {
+    const auto alive = alive();
+    if (alive != process::Status::OK) return alive;
 
     Logger::trace<true>("Pinging engine {}", config_.name);
 
@@ -73,12 +74,12 @@ bool UciEngine::isready(std::chrono::milliseconds threshold) {
         Logger::trace<true>("Engine {} didn't respond to isready.", config_.name);
         Logger::warn<true>("Warning; Engine {} is not responsive.", config_.name);
 
-        return false;
+        return res;
     }
 
     Logger::trace<true>("Engine {} is {}", config_.name, "responsive.");
 
-    return res == process::Status::OK;
+    return res;
 }
 
 bool UciEngine::position(const std::vector<std::string> &moves, const std::string &fen) {
