@@ -53,8 +53,8 @@ CountingSemaphore semaphore(16);
 }
 
 process::Status UciEngine::isready(std::chrono::milliseconds threshold) {
-    const auto alive = alive();
-    if (alive != process::Status::OK) return alive;
+    const auto is_alive = alive();
+    if (is_alive != process::Status::OK) return is_alive;
 
     Logger::trace<true>("Pinging engine {}", config_.name);
 
@@ -152,7 +152,7 @@ bool UciEngine::ucinewgame() {
         return false;
     }
 
-    return isready(ucinewgame_time_);
+    return isready(ucinewgame_time_) == process::Status::OK;
 }
 
 bool UciEngine::uci() {
