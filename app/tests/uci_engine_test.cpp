@@ -141,7 +141,7 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci_engine.output()[1].line == "line1");
         CHECK(uci_engine.output()[2].line == "uciok");
 
-        CHECK(uci_engine.writeEngine("isready") == engine::process::Status::OK);
+        CHECK(uci_engine.writeEngine("isready"));
         const auto res2 = uci_engine.readEngine("readyok");
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine.output().size() == 1);
