@@ -52,7 +52,7 @@ namespace {
 CountingSemaphore semaphore(16);
 }
 
-Status UciEngine::isready(std::chrono::milliseconds threshold) {
+process::Status UciEngine::isready(std::chrono::milliseconds threshold) {
     const auto alive = alive();
     if (alive != process::Status::OK) return alive;
 
